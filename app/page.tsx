@@ -189,7 +189,7 @@ export default async function Home() {
           <TableCard
             title="Most Games Played"
             description="List of players with the most games played over 30 days."
-            columnHeaders={['Name', 'Total Satchel Kills']}
+            columnHeaders={['Name', 'Total Games Played']}
             data={data.playersWithMostGamesPlayed}
           />
         </Grid>
