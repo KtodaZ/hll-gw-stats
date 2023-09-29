@@ -4,28 +4,33 @@ import TableCard from '@/components/TableCard';
 import Grid from '@mui/joy/Grid';
 
 async function getData() {
+  let updated: string | null = '';
   try {
     const [mostSatchelKills, mostKnifeKills, mostGrenadeKills, mostMineKills, mostVehicleKills, highestTotalScore, highestAvgKillsPerMinute, highestSupportScoreInAnyGame, highestCombatScoreInAnyGame, highestKillStreak, mostDeathsInASingleGame, mostKillsInASingleGame, highestAvgKDRatio, highestKDRatioInAnyGame, playersWithMostGamesPlayed, highestKPM, highestKills] = await Promise.all([
-      fetch('https://api.val.town/v1/run/ktodaz.mostSatchelKills').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.mostKnifeKills').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.mostGrenadeKills').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.mostMineKills').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.mostVehicleKills').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.highestTotalScore').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.highestAvgKillsPerMinute').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.highestSupportScoreInAnyGame').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.highestCombatScoreInAnyGame').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.highestKillStreak').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.mostDeathsInASingleGame').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.mostKillsInASingleGame').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.highestAvgKDRatio').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.highestKDRatioInAnyGame').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.playersWithMostGamesPlayed').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.highestKPM').then(response => response.json()),
-      fetch('https://api.val.town/v1/run/ktodaz.highestKills').then(response => response.json())
+      fetch('https://api.val.town/v1/run/ktodaz.mostSatchelKills', { next: { revalidate: 3600 } }).then(response => {
+        updated = new Date().toLocaleString();
+        return response.json();
+      }),
+      fetch('https://api.val.town/v1/run/ktodaz.mostKnifeKills', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.mostGrenadeKills', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.mostMineKills', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.mostVehicleKills', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.highestTotalScore', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.highestAvgKillsPerMinute', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.highestSupportScoreInAnyGame', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.highestCombatScoreInAnyGame', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.highestKillStreak', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.mostDeathsInASingleGame', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.mostKillsInASingleGame', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.highestAvgKDRatio', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.highestKDRatioInAnyGame', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.playersWithMostGamesPlayed', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.highestKPM', { next: { revalidate: 3600 } }).then(response => response.json()),
+      fetch('https://api.val.town/v1/run/ktodaz.highestKills', { next: { revalidate: 3600 } }).then(response => response.json())
     ]);
 
     return {
+      updated,
       mostSatchelKills,
       mostKnifeKills,
       mostGrenadeKills,
@@ -55,6 +60,7 @@ export default async function Home() {
   console.log('data', data)
   return (
     <main>
+      Last Updated: {data.updated}
       <Grid container spacing={2}>
         <Grid lg={6} xs={12} xl={4}>
           <TableCard
